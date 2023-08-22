@@ -29,81 +29,22 @@
 extern "C" {
 #endif
 
-#define AGORA_IOT_CERTIFICATE_MAX_LEN 2048
-#define AGORA_IOT_PRIVATE_KEY_MAX_LEN 2048
-#define AGORA_IOT_DOMAIN_MAX_LEN 256
 #define AGORA_IOT_CLIENT_ID_MAX_LEN 64
-
-typedef struct agora_iot_device_info {
-  /* The buffer to store device certificate from server */
-  char certificate[AGORA_IOT_CERTIFICATE_MAX_LEN];
-  /* The buffer to store device private key from server */
-  char private_key[AGORA_IOT_PRIVATE_KEY_MAX_LEN];
-  /* The buffer to store domain from server */
-  char domain[AGORA_IOT_DOMAIN_MAX_LEN];
-  /* The client ID for the device which will be used for the agora CALL server */
-  char client_id[AGORA_IOT_CLIENT_ID_MAX_LEN];
-} agora_iot_device_info_t;
+#define AGORA_IOT_ACTIVATE_RES_MAX_LEN 1024
 
 /**
- * @brief Register a device and bind with target user.
- *
- * @param[in] host_url:       AWS open api host url
- * @param[in] product_key:    Product id is created when creating a product on console
- * @param[in] device_id:      The device unique ID, eg. MAC address,
- *                            Length should be less than 64 bytes
- *                            Supported character scopes are:
- *                            - The 26 uppercase English letters: A to Z
- *                            - The 10 numbers: 0 to 9
- * @param[in] user_id:        The user id from application.
- *                            If you only need the pure call-server, the user_id should be NULL.
- * @param[in] device_nickname:The device nickname on mobile phone to display.
- *                            If you only need the pure call-server, the user_id should be NULL.
- * @param[out] info:          The returned information for sdk init
- * @return
- * - = 0: success;
- * - < 0: failure, refer to agora_iot_error_e
+ * @brief Activate the device with the Agora IoT cloud.
+ * 
+ * @param url The URL of the Agora IoT cloud.
+ * @param app_id The App ID of the Agora.
+ * @param node_id The node ID of the device.
+ * @param node_secret The node secret of the device.
+ * @param response The response from the Agora IoT cloud.
+ * @param response_len The length of the response.
+ * 
  */
-int agora_iot_register_and_bind(const char *host_url, const char *product_key, const char *device_id,
-                                const char *user_id, const char *device_nickname, agora_iot_device_info_t *info);
-
-/**
- * @brief Query the user binding with device
- * If you only need the call-server, you should not call this API due to it would return failure in the pure call-server.
- *
- * @param[in] host_url:       AWS open api host url
- * @param[in] product_key:    Product id is created when creating a product on console
- * @param[in] device_id:      The device unique ID, eg. MAC address,
- *                            Length should be less than 64 bytes
- *                            Supported character scopes are:
- *                            - The 26 uppercase English letters: A to Z
- *                            - The 10 numbers: 0 to 9
- * @param[out] user_id:     The user id, length: 64 bytes
- * @return
- * - = 0: success
- * - < 0: failure, refer to agora_iot_error_e
- */
-int agora_iot_query_user(const char *host_url,  const char *product_key, const char *device_id, char *user_id);
-
-/**
- * @brief Activate agora RTC license, this function cannot reentrant
- *
- * @param[in] appid       appid used for this product, got from Agora Developer Platform
- * @param[in] key         customer key of bisic auth, got from Agora Developer Platform
- * @param[in] secret      customer secret of bisic auth, got from Agora Developer Platform
- * @param[in] product_key Product id is created when creating a product on console
- * @param[in] device_id   The device unique ID, eg. MAC address,
- *                        Length should be less than 64 bytes
- *                        Supported character scopes are:
- *                        - The 26 uppercase English letters: A to Z
- *                        - The 10 numbers: 0 to 9
- * @param[out] cert     the buffer of keeping the license certificate,
- *                      should be save to file or flash, and YOU HAVE TO FREE IT AFTER.
- * @return = 0: success;
- *         < 0: failure, refer to agora_iot_error_e
- */
-int agora_iot_license_activate(const char *appid, const char *key, const char *secret,
-                              const char *product_key, const char *device_id, char **cert);
+int agora_iot_node_activate(const char *url, const char *app_id, const char *node_id, const char *node_secret,
+                            char *response, int response_len);
 
 #ifdef __cplusplus
 }
