@@ -1,8 +1,8 @@
-开始本项目之前，请按说明(https://github.com/AgoraIO-Community/ag-iot-callkit-device-demo/wiki)前往声网控制台完成申请测试所用一机一密（也称激活码）
+开始本项目之前，请按[wiki说明](https://github.com/AgoraIO-Community/ag-iot-callkit-device-demo/wiki)前往声网控制台完成申请测试所用一机一密（也称激活码）
 
 1、构建Demo应用前须先修改example/src/app_config.h中的APP ID并联系销售(sales@agora.io)获取对应测试一机一密(node_id/node_secret)；
 
-- CONFIG_AGORA_APP_ID需要通过声网控制台(https://console.shengwang.cn/)创建项目ID；
+- CONFIG_AGORA_APP_ID需要通过[声网控制台](https://console.shengwang.cn/)创建项目ID；
 
 2、在example目录下执行make命令可编译生成Demo
 
